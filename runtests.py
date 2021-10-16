@@ -5,6 +5,7 @@ from django.core.management.utils import get_random_secret_key
 
 DEFAULT_SETTINGS = dict(
     SECRET_KEY = get_random_secret_key(),
+    DEFAULT_AUTO_FIELD = 'django.db.models.AutoField',
     INSTALLED_APPS=[
         'django.contrib.admin',
         'django.contrib.auth',
@@ -36,10 +37,11 @@ DEFAULT_SETTINGS = dict(
             'debug': True,
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
-    }]
+    }]    
 )
 
 def runtests():

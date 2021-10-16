@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 
 import sys
-
+from django.core.management.utils import get_random_secret_key
 
 DEFAULT_SETTINGS = dict(
+    SECRET_KEY = get_random_secret_key(),
     INSTALLED_APPS=[
+        'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.sites',
+        'django.contrib.messages',
         'ads_txt',
     ],
     DATABASES={
@@ -17,7 +20,7 @@ DEFAULT_SETTINGS = dict(
     },
     ROOT_URLCONF='test_utils.urls',
     SITE_ID=1,
-    MIDDLEWARE_CLASSES=[
+    MIDDLEWARE=[
         'django.middleware.http.ConditionalGetMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -29,9 +32,15 @@ DEFAULT_SETTINGS = dict(
     TEMPLATES=[{
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'APP_DIRS': True,
+        'OPTIONS': {
+            'debug': True,
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
     }]
 )
-
 
 def runtests():
     import django
